@@ -3,6 +3,7 @@ from flask_sqlalchemy import SQLAlchemy
 
 db = SQLAlchemy()
 
+
 class BaseModel(db.Model):
     __abstract__ = True
     uuid = db.Column(db.Integer, primary_key=True)
@@ -23,8 +24,8 @@ class Admin(BaseModel):
 
 
 class ArtWork(BaseModel):
-     __abstract__ = True
-     pass
+    __abstract__ = True
+    pass
 
 
 class Fashion(ArtWork):

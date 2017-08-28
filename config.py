@@ -1,27 +1,53 @@
 """Conatain App configurations."""
+import os
+
 
 class Config(object):
-    pass
+    """Model base config object that can inherited by other configs."""
+
+    SECRET_KEY = os.environ.get('SECRET')
+    SQLALCHEMY_COMMIT_ON_TEARDOWN = True
+    SQLALCHEMY_TRACK_MODIFICATIONS = False
+    DEBUG = False
+    TESTING = False
+    DEVELOPMENT = False
 
 
 class Development(Config):
-    pass
+    """Model Development enviroment config object."""
+
+    DEBUG = True
+    DEVELOPMENT = True
+    SQLALCHEMY_DATABASE_URI = os.environ.get('DEV_DATABASE') or \
+        'sqlite:///:memory:'
+    SQLALCHEMY_TRACK_MODIFICATIONS = True
 
 
 class Production(Config):
-    pass
+    """Model Production enviroment config object."""
+
+    SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL')
 
 
 class Testing(Config):
-    pass
+    """Model Testing enviroment config object."""
+
+    DEBUG = True
+    TESTING = True
+    SQLALCHEMY_TRACK_MODIFICATIONS = True
+    SQLALCHEMY_DATABASE_URI = os.environ.get('TEST_DATABASE') or \
+        'sqlite:///:memory:'
 
 
 class Staging(Config):
-    pass
+    DEBUG = True
+    DEVELOPMENT = True
+    SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL')
+    SQLALCHEMY_TRACK_MODIFICATIONS = True
 
 
 configuration = {
-    "Testing" : Testing,
+    "Testing": Testing,
     "Development": Development,
     "Production": Production,
     "Staging": Staging
