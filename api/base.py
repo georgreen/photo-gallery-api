@@ -3,6 +3,6 @@
 from flask_restplus import Api
 
 api = Api(
-    title='Photo-Gallery Api.',
+    title='😝 Photo-Gallery Api 😁',
     version='1.0',
     description="""Photo-gallery Api Endpoint Documentation.""")

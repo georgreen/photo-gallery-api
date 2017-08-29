@@ -11,9 +11,16 @@ def create_app(enviroment="Development"):
         app (Flask): it returns an instance of Flask.
     """
     # import dependacies here (avoid's circular import problem in testing)
-    from config import configuration
-    from models import db
-    from api.base import api
+    try:
+        # fix import error in nosetest
+        from .config import configuration
+        from .models import db
+        from .api.base import api
+    except ImportError:
+        # fix import error in starting the app
+        from config import configuration
+        from models import db
+        from api.base import api
 
     app = Flask(__name__)
     app.config.from_object(configuration[enviroment])

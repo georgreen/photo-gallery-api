@@ -5,8 +5,8 @@ from flask_migrate import Migrate, MigrateCommand
 from flask_script import Manager, Shell, prompt_bool
 
 from app import create_app
-from models import (Admin, ArtWork, BeautyGlamour, Composites, Conceptual,
-                    Fashion, FineArt, LifeStyle, db)
+from models import (Admin, BeautyGlamour, Composite, Conceptual, Fashion,
+                    FineArt, LifeStyle, Picture, db, Portrait)
 
 app = create_app(enviroment=os.environ.get('APP_SETTINGS') or "Development")
 manager = Manager(app)
@@ -38,14 +38,15 @@ def shell():
     """Make a shell/REPL context available."""
     return dict(app=create_app(),
                 db=db,
-                ArtWork=ArtWork,
+                Picture=Picture,
                 Admin=Admin,
                 BeautyGlamour=BeautyGlamour,
-                Composites=Composites,
+                Composite=Composite,
                 Conceptual=Conceptual,
                 Fashion=Fashion,
                 FineArt=FineArt,
-                LifeStyle=LifeStyle)
+                LifeStyle=LifeStyle,
+                Portrait=Portrait)
 
 
 manager.add_command("shell", Shell(make_context=shell))
