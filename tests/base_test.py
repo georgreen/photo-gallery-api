@@ -17,11 +17,15 @@ class BaseTestCase(TestCase):
 
     def setUp(self):
         """Setup function to configure test enviroment."""
+
         self.app = create_app('Testing')
         self.app_context = self.app.app_context()
         self.app_context.push()
         db.drop_all()
         db.create_all()
+
+        # test client
+        self.client = self.app.test_client()
 
         # mock tag instance
         self.tag = Tag(name="test-tag-instance")
@@ -58,7 +62,7 @@ class BaseTestCase(TestCase):
         # mock potrait instance
         self.portrait = Portrait(path="/img/image.jpeg",
                                  name="newimageitem",
-                                 project="desert storm 2",
+                                 project="desert storm",
                                  meta_data={
                                   "description": "All winds go!",
                                   "date_created": "12/01/1997",
@@ -71,7 +75,7 @@ class BaseTestCase(TestCase):
         # mock fineArt instance
         self.fine_art = FineArt(path="/img/image.jpeg",
                                 name="newimageitem",
-                                project="desert storm 2",
+                                project="desert storm",
                                 meta_data={
                                   "description": "All winds go!",
                                   "date_created": "12/01/1997",

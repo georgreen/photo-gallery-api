@@ -59,8 +59,12 @@ class BaseModel(db.Model):
         Returns:
             A dict object
         """
-        # TODO
-        pass
+        dictionary_mapping = {
+            artibute.name: getattr(self, artibute.name)
+            for artibute in self.__table__.columns}
+        if self.__mapper_args__:
+            dictionary_mapping["tags"] = [tag.name for tag in self.tags]
+        return dictionary_mapping
 
 
 class Admin(BaseModel):
@@ -117,22 +121,23 @@ class Picture(BaseModel):
         'polymorphic_identity': 'pictures'
     }
 
-    def __init__(self, path, name, project, **meta):
+    def __init__(self, path, name, project="N/A", **meta):
         """Initilize art models."""
         self.path = path
         self.name = name
         self.project = project
+        default = "Not Available"
         meta_data = meta.get("meta_data", {})
-        self.date_created = meta_data.get('date_created', "")
-        self.day_time = meta_data.get('time', "")
-        self.resolution = meta_data.get('resolution', "")
-        self.description = meta_data.get('description', "")
+        self.date_created = meta_data.get('date_created', default)
+        self.day_time = meta_data.get('time', default)
+        self.resolution = meta_data.get('resolution', default)
+        self.description = meta_data.get('description', default)
         self.tags = meta_data.get('tags', [])
 
     def __repr__(self):
         """Repl representation."""
-        return "<{}(name={})>".format(self.__mapper_args__.get(
-            'polymorphic_identity'), self.name)
+        model_type = self.__mapper_args__.get('polymorphic_identity')
+        return f"<{model_type}(name = {self.name})>"
 
 
 class Fashion(Picture):

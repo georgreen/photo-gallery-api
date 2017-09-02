@@ -1,4 +1,5 @@
 """Entry point for app, contain commands to configure and run the app."""
+
 import os
 
 from flask_migrate import Migrate, MigrateCommand
@@ -6,11 +7,17 @@ from flask_script import Manager, Shell, prompt_bool
 
 from app import create_app
 from models import (Admin, BeautyGlamour, Composite, Conceptual, Fashion,
-                    FineArt, LifeStyle, Picture, db, Portrait)
+                    FineArt, LifeStyle, Picture, Portrait, Tag, db)
+
+try:
+    from .api.base import create_art_work
+except ImportError:
+    from api.base import create_art_work
+
 
 app = create_app(enviroment=os.environ.get('APP_SETTINGS') or "Development")
 manager = Manager(app)
-migrate = Migrate(app, db)
+Migrate(app=app, db=db)
 
 
 @manager.command
@@ -46,7 +53,9 @@ def shell():
                 Fashion=Fashion,
                 FineArt=FineArt,
                 LifeStyle=LifeStyle,
-                Portrait=Portrait)
+                Portrait=Portrait,
+                create_art_work=create_art_work,
+                Tag=Tag)
 
 
 manager.add_command("shell", Shell(make_context=shell))

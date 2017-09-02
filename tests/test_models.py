@@ -44,6 +44,13 @@ class TestFashion(BaseTestCase):
             type="fashion").filter_by(name="test-fashion-instance").first()
         self.assertFalse(new_fashion_instance)
 
+    def test_serialize_model(self):
+        """Test models can be serilized."""
+        self.assertTrue(self.fashion.save())
+        serilize_model = self.fashion.serialize()
+        self.assertTrue(serilize_model)
+        self.assertTrue(serilize_model['name'] == "test-fashion-instance")
+
 
 class TestTag(BaseTestCase):
     """Contain tests fro Tag model."""
