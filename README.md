@@ -13,7 +13,7 @@ This App exposes endpoints that allows ```Clients/Users``` to access art-work fr
 |POST| `/api/v1.0/category` | Create a new item in category. |
 |GET| `/api/v1.0/category/` | List artwork in all categories. |
 |GET| `/api/v1.0/category/<name>` | List all artwork in category. |
-|GET| `/api/v1.0/category/<name>/<project_name>` | List all artwork in a given project. |
+|GET| `/api/v1.0/project/<name>/<project_name>` | List all artwork in a given project. |
 |GET| `/api/v1.0/category/<name>/<id>` | Get single artwork in category. |
 |PUT| `/api/v1.0/category/<name>/<id>` | Update artwork in category. |
 |DELETE| `/api/v1.0/category/<name>/<id>` | Delete this single artwork in category. |
